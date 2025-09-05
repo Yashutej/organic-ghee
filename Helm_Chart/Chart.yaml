@@ -1,0 +1,5 @@
+apiVersion: v2
+name: organic-ghee
+description: Helm chart for Organic Ghee App with MongoDB
+version: 0.1.0
+appVersion: "1.0"

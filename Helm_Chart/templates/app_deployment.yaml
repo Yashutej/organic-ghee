@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organic-ghee
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: organic-ghee
+  template:
+    metadata:
+      labels:
+        app: organic-ghee
+    spec:
+      containers:
+        - name: organic-ghee
+          image: {{ .Values.app.image }}
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          env:
+            - name: MONGO_URL
+              value: "mongodb://$(MONGO_USER):$(MONGO_PASSWORD)@mongodb:{{ .Values.mongodb.port }}/$(MONGO_DB)?authSource=admin"
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-user
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-password
+            - name: MONGO_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: organic-ghee-config
+                  key: MONGO_DB
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: organic-ghee-config
+                  key: APP_PORT
+
