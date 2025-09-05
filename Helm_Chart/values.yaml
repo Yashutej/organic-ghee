@@ -1,17 +1,14 @@
 namespace: yashu
 
-mongodb:
-  image: mongo:6.0
-  username: mongouser
-  password: mongopass
-  database: organicdb
-  port: 27017
-
 app:
-  image: yashukl2002/organic-ghee:latest
+  image: "yashukl2002/organic-ghee:v1"
   replicas: 2
   port: 5656
 
-ingress:
-  enabled: true
-  host: organic-ghee.local
+mongodb:
+  image: "mongo:6.0"
+  replicas: 1
+  port: 27017
+  user: "admin"
+  password: "password123"
+  database: "organicghee"

@@ -4,7 +4,7 @@ metadata:
   name: mongodb
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.mongodb.replicas }}
   selector:
     matchLabels:
       app: mongodb
@@ -29,5 +29,14 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongo-password
-
-
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-database
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-data
+          emptyDir: {}   

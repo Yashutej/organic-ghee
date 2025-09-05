@@ -31,14 +31,5 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongo-password
-            - name: MONGO_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: organic-ghee-config
-                  key: MONGO_DB
-            - name: APP_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: organic-ghee-config
-                  key: APP_PORT
+           
 
